@@ -62,12 +62,12 @@ var cube = (function () {
                 for (var i = 1; i < pts.length; i++) {
                     pti = pts[i - 1];
                     pt = pts[i];
-                    canvas.rect(offset.x + round(pti.x), offset.y + round(pti.y), offset.x + round(pt.x), offset.y + round(pt.y));
+                    canvas.rect(round(offset.x + pti.x), round(offset.y + pti.y), round(offset.x + pt.x), round(offset.y + pt.y));
                     pti = pt;
                 }
 
                 pti = pts[0];
-                canvas.rect(offset.x + round(pti.x), offset.y + round(pti.y), offset.x + round(pt.x), offset.y + round(pt.y));
+                canvas.rect(round(offset.x + pti.x), round(offset.y + pti.y), round(offset.x + pt.x), round(offset.y + pt.y));
             }
 
             var pts0 = cube[0],
@@ -75,10 +75,10 @@ var cube = (function () {
             for (var k = 0; k < pts0.length; k++) {
                 var pt0 = pts0[k];
                 var pt1 = pts1[k];
-                canvas.rect(offset.x + round(pt0.x), offset.y + round(pt0.y), offset.x + round(pt1.x), offset.y + round(pt1.y));
+                canvas.rect(round(offset.x + pt0.x), round(offset.y + pt0.y), round(offset.x + pt1.x), round(offset.y + pt1.y));
             }
 
-            return canvas.render();
+            return canvas.toString();
         }
     }
 })();

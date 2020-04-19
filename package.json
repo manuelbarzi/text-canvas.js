@@ -1,7 +1,7 @@
 {
   "name": "text-canvas.js",
-  "version": "0.0.0",
-  "description": "A canvas for rendering whatever with characters.",
+  "version": "0.0.2",
+  "description": "A canvas for rendering whatever with characters in JavaScript.",
   "main": "text-canvas.js",
   "scripts": {
   },

@@ -1,10 +1,10 @@
 /**
- * M.js
+ * M JS
  * 
  * 3D operations in JavaScript.
  * 
  * @author manuelbarzi
- * @version 0.0.0
+ * @version 0.2.1
  */
 var M = (function () {
     function p(x, y, z) {

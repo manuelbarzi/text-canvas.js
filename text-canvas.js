@@ -1,10 +1,10 @@
 /**
- * TextCanvas.js
+ * Text Canvas JS
  * 
  * A canvas for rendering whatever with characters.
  * 
  * @author manuelbarzi
- * @version 0.0.0
+ * @version 0.0.2
  */
 var TextCanvas = (function () {
     function create(width, height) {
@@ -19,18 +19,18 @@ var TextCanvas = (function () {
             clear(this, 0, 0, width, height, value);
         };
 
-        canvas.render = function () {
-            return render(this);
+        canvas.toString = function () {
+            return toString(this);
         };
 
         canvas.rect = function (x0, y0, x1, y1, value) {
             if (arguments.length < 5) value = '*';
-            
+
             rect(this, x0, y0, x1, y1, value);
         };
 
-        canvas.set = function (x, y, value) {
-            set(this, x, y, value);
+        canvas.dot = function (x, y, value) {
+            dot(this, x, y, value);
         };
 
         canvas.clear();
@@ -38,73 +38,83 @@ var TextCanvas = (function () {
         return canvas;
     }
 
-    function clear(canvas, fromX, fromY, toX, toY, value) {
+    function clear(canvas, x0, y0, x1, y1, value) {
         if (arguments.length < 6) value = ' ';
 
-        for (var j = fromY; j <= toY; j++)
-            for (var i = fromX; i <= toX; i++)
+        for (var j = y0; j <= y1; j++)
+            for (var i = x0; i <= x1; i++)
                 canvas[j][i] = value;
     }
 
-    function render(canvas) {
-        var render = '';
+    function toString(canvas) {
+        var string = '';
 
         for (var j = 0; j < canvas.length; j++)
-            render += canvas[j].join('') + '\n';
+            string += canvas[j].join('') + '\n';
 
-        return render;
+        return string;
     }
 
-    function set(canvas, x, y, value) {
+    function dot(canvas, x, y, value) {
         canvas[y][x] = value;
     }
 
-    function rect(canvas, fromX, fromY, toX, toY, value) {
+    function rect(canvas, x0, y0, x1, y1, value) {
         if (arguments.length < 6) value = '*';
 
-        var from, to;
+        var xd = x1 - x0,
+            yd = y1 - y0,
+            m = Math.abs(yd / xd);
 
-        if (fromX === toX) {
-            from = fromY;
-            to = toY;
-
-            if (fromY > toY) {
-                from = toY;
-                to = fromY;
-            }
-
-            for (var j = from; j <= to; j++)
-                canvas[j][fromX] = value;
-        } else if (fromY === toY) {
-            from = fromX;
-            to = toX;
-
-            if (fromX > toX) {
-                from = toX;
-                to = fromX;
-            }
-
-            for (var i = from; i <= to; i++)
-                canvas[fromY][i] = value;
+        if (isNaN(m))
+            canvas[y0][x0] = value;
+        else if (m === 0) {
+            if (xd > 0)
+                for (var i = x0; i <= x1; i++)
+                    canvas[y0][i] = value;
+            else
+                for (var i = x0; i >= x1; i--)
+                    canvas[y0][i] = value;
+        } else if (m === Infinity) {
+            if (yd > 0)
+                for (var j = y0; j <= y1; j++)
+                    canvas[j][x0] = value;
+            else
+                for (var j = y0; j >= y1; j--)
+                    canvas[j][x0] = value;
         } else {
-            var m = (toY - fromY) / (toX - fromX);
+            if (m <= 1) {
+                m = yd / xd;
 
-            var j;
+                var j;
 
-            from = fromX;
-            to = toX;
+                if (xd > 0)
+                    for (var i = x0; i <= x1; i++) {
+                        j = Math.round(m * (i - x0) + y0);
+                        canvas[j][i] = value;
+                    }
+                else
+                    for (var i = x0; i >= x1; i--) {
+                        j = Math.round(m * (i - x0) + y0);
+                        canvas[j][i] = value;
+                    }
+            } else {
+                m = xd / yd;
 
-            if (fromX > toX) {
-                from = toX;
-                to = fromX;
-            }
+                var i;
 
-            for (var i = from; i <= to; i++) {
-                j = Math.round(m * (i - fromX) + fromY);
-                canvas[j][i] = value;
+                if (yd > 0)
+                    for (var j = y0; j <= y1; j++) {
+                        i = Math.round(m * (j - y0) + x0);
+                        canvas[j][i] = value;
+                    }
+                else
+                    for (var j = y0; j >= y1; j--) {
+                        i = Math.round(m * (j - y0) + x0);
+                        canvas[j][i] = value;
+                    }
             }
         }
-
     }
 
     return create;
