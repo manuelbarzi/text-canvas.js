@@ -1,0 +1,21 @@
+{
+  "name": "text-canvas.js",
+  "version": "0.0.0",
+  "description": "A canvas for rendering whatever with characters.",
+  "main": "text-canvas.js",
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/manuelbarzi/text-canvas.js.git"
+  },
+  "keywords": ["2d", "3d", "text", "canvas", "js", "text-canvas.js"],
+  "author": "manuelbarzi",
+  "license": "ISC",
+  "dependencies": {
+  },
+  "bugs": {
+    "url": "https://github.com/manuelbarzi/text-canvas.js/issues"
+  },
+  "homepage": "https://github.com/manuelbarzi/text-canvas.js#readme"
+}
